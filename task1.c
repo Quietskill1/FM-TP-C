@@ -1,10 +1,12 @@
 //Write a program to determine if the sum of three user-input integers is even or odd as well as if the number is prime or composite.
 //#include <stdio.h>, main returns an int and has to accept void, scanf("%d",&a) accepts, printf("blabla %d bla bla",a) prints a where %d is
 #include <stdio.h>
-bool checkPrime(int num)
+int checkPrime(int num)
 {
     int c=0;
-    if(num <= 1)
+    if(num==0||num==1)
+        return -1;
+    if(num<=1)
     return false;
     for(int i=1;i<=num/2;i++)
     {
@@ -12,23 +14,35 @@ bool checkPrime(int num)
             c++;
     }
     if(c>1)
-        return false;
+        return 0;
     else
-        return true;
+        return 1;
 }
-int main(void)
+int main()
 {
     int a, b, c, sum;
-    printf("Enter thee integers: ");
-    scanf("%d %d %d", &a,&b,&c);
-    sum = a + b + c;
+    int f=0;
+    while(!f)
+    {
+    printf("Enter three integers: ");
+    if(scanf("%d %d %d", &a, &b, &c)==3)
+    f=1;
+    else
+    {
+        printf("Invalid input. Please enter three integers.\n");
+        while(getchar()!='\n');
+    }
+    }
+    sum=a+b+c;
     if(sum%2==0)
         printf("The sum %d is even", sum);
     else
         printf("The sum %d is odd", sum);
-    if(checkPrime(sum))
+    if(checkPrime(sum)==1)
         printf("\nThe sum %d is a prime number", sum);
+    else if(checkPrime(sum)==-1)
+        printf("\nThe sum %d is neither a prime nor a composite number", sum);
     else
-        printf("\nThe sum %d is not a prime number", sum);
+        printf("\nThe sum %d is a composite number", sum);
     return 0;
 }
