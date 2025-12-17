@@ -1,55 +1,36 @@
-//Create a program to remove all duplicates from an array of integers.
-//Basics of arrays, searching, shifting elements.
+//Create a program to simulate a simple login system with 3 attempts to enter the correct password.
+//Store pw in a string, compare user i/p to stored pw, count the attempts, exit after 3
+//Strings in C are char arrays, use strcmp to compare strings. char '\0' is string terminator.
+//System.exit(0) equivalent in C is exit(0) from stdlib.h
 #include <stdio.h>
-void accept(int arr[],int n)
-{
-    for(int i=0;i<n;i++)
-    {
-        input:
-        printf("Enter element %d: ",i+1);
-        if(scanf("%d",&arr[i])!=1)
-        {
-            printf("Invalid input. Please enter an integer.\n");
-            while(getchar()!='\n');
-            goto input;
-        }
-    }
-}
-int removeDuplicates(int arr[],int n)
-{
-    int i,j,k;
-    for(i=0;i<n;i++)
-    {
-        for(j=i+1;j<n;)
-        {
-            if(arr[i]==arr[j])
-            {
-                for(k=j;k<n-1;k++)
-                    arr[k]=arr[k+1];
-                n--;
-            }
-            else
-                j++;
-        }
-    }
-    return n;
-}
+#include <stdlib.h>
+#include <string.h>
 int main(void)
 {
-    int n;
-    printf("Enter number of elements: ");
-    input:
-    if(scanf("%d",&n)!=1||n<=0)
+    char ipw[256],spw[256];
+    printf("Enter master password: ");
+    fgets(spw, sizeof(spw), stdin);
+    int c=0;
+    while(true)
     {
-        printf("Invalid input. Please enter a positive integer.\n");
-        while(getchar()!='\n');
-        goto input;
+        printf("Enter password: ");
+        fgets(ipw, sizeof(ipw), stdin);
+        if(strcmp(spw, ipw)==0)
+        {
+            printf("Access Granted");
+            break;
+        }
+        else
+        {
+            c++;
+            printf("Incorrect Password.");
+            if(c==3)
+            {
+                printf("3 unsuccessful attempts.\nExiting...");
+                exit(0);
+            }
+            else
+                printf("Incorrect password.\nYou have %d attemp(s) remaining. Try Again.\n", 3-c);
+        }
     }
-    int arr[n];
-    accept(arr,n);
-    n=removeDuplicates(arr,n);
-    printf("Array after removing duplicates: \n");
-    for(int i=0;i<n;i++)
-        printf("%d ",arr[i]);
-    return 0;
 }
