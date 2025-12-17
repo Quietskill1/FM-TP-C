@@ -11,7 +11,13 @@ void accept(int arr[4][4])
         for (int j=0; j<4; j++)
         {
             printf("Element [%d][%d]: ", i, j);
-            scanf("%d", &arr[i][j]);
+            input:
+            if(scanf("%d", &arr[i][j])!=1)
+            {
+                printf("Invalid input. Please enter an integer.\n");
+                while(getchar()!='\n');
+                goto input;
+            }
         }
     }
 }
@@ -21,9 +27,7 @@ void display(int arr[4][4])
     for (int i=0; i<4; i++)
     {
         for (int j=0; j<4; j++)
-        {
             printf("%d\t", arr[i][j]);
-        }
         printf("\n");
     }
 }
@@ -33,9 +37,7 @@ void sumAll(int arr[4][4])
     for (int i=0; i<4; i++)
     {
         for (int j=0; j<4; j++)
-        {
             s+=arr[i][j];
-        }
     }
     printf("Sum of all elements: %d\n", s);
 }
