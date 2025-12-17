@@ -9,21 +9,52 @@ Quantity (integer)
 Price (float) 
 */
 //Four arrays, search for highest
+//invalid if two product have same id.
 #include <stdio.h>
 #include <string.h>
+
 void accept(int n, int id[], char na[][50], int q[], float p[])
 {
     for (int i=0; i<n; i++)
     {
-        printf("Enter details for product %d\n", i+1);
-        printf("Product ID: ");
-        scanf("%d", &id[i]);
-        printf("Product Name: ");
-        scanf("%s", na[i]);
-        printf("Quantity: ");
-        scanf("%d", &q[i]);
-        printf("Price: ");
-        scanf("%f", &p[i]);
+        printf("Enter details for product %d:\n", i+1);
+        input:
+        printf("Product ID (integer): ");
+        if(scanf("%d", &id[i])!=1)
+        {
+            printf("Invalid input. Please enter an integer.\n");
+            while(getchar()!='\n');
+            goto input;
+        }
+        //check for duplicate id
+        for (int j=0; j<i; j++)
+        {
+            if (id[j]==id[i])
+            {
+                printf("Duplicate Product ID. Please enter a unique Product ID.\n");
+                goto input;
+            }
+        }
+        printf("Product Name (string): ");
+        while(getchar()!='\n');//clear newline from buffer
+        fgets(na[i], sizeof(na[i]), stdin);
+        na[i][strcspn(na[i], "\n")] = '\0';//remove trailing newline
+        inputQ:
+        printf("Quantity (integer): ");
+        if(scanf("%d", &q[i])!=1)
+        {
+            printf("Invalid input. Please enter an integer.\n");
+            while(getchar()!='\n');
+            goto inputQ;
+        }
+        inputP:
+        printf("Price (float): ");
+        if(scanf("%f", &p[i])!=1)
+        {
+            printf("Invalid input. Please enter a float.\n");
+            while(getchar()!='\n');
+            goto inputP;
+        }
     }
 }
 int highestQty(int n, int q[])
@@ -56,14 +87,20 @@ void display(int n, int id[], char na[][50], int q[], float p[])
     printf("Total inventory value: %f\n", totalValue);//could use %.2f for 2 decimal places
     int hq=highestQty(n, q);
     int hp=highestPrice(n, p);
-    printf("Product with highest quantity:\nID: %d\nName: %s\nQuantity: %d\nPrice: %f\n", id[hq], na[hq], q[hq], p[hq]);
-    printf("Product with highest price:\nID: %d\nName: %s\nQuantity: %d\nPrice: %f\n", id[hp], na[hp], q[hp], p[hp]);
+    printf("Product with highest quantity:\nID: %d\nName: %s\nQuantity: %d\nPrice: Rs.%.2f\n", id[hq], na[hq], q[hq], p[hq]);
+    printf("Product with highest price:\nID: %d\nName: %s\nQuantity: %d\nPrice: Rs.%.2f\n", id[hp], na[hp], q[hp], p[hp]);
 }
 int main(void)
 {
     int n;
     printf("Enter number of products: ");
-    scanf("%d", &n);
+    input1:
+    if(scanf("%d", &n)!=1||n<=0)
+    {
+        printf("Invalid input. Please enter a positive integer.\n");
+        while(getchar()!='\n');
+        goto input1;
+    }
     int id[n], q[n];
     char na[n][50];
     float p[n];
