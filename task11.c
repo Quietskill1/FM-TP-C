@@ -5,7 +5,13 @@ void accept(int n, int a[n])
 {
     for (int i=0; i<n; i++)
     {
-        scanf("%d", &a[i]);
+        input:
+        if(scanf("%d", &a[i])!=1)
+        {
+            printf("Invalid input. Please enter an integer.\n");
+            while(getchar()!='\n');
+            goto input;
+        }
     }
 }
 void display(int n, int a[n])
@@ -46,32 +52,63 @@ void selSort(int n, int a[n])
         a[i]=temp;
     }
 }
-int binSearch(int n, int a[n], int k)
+void binSearch(int n, int a[n], int k)//if multiple occurrences, print all indices
 {
-    int l=0, h=n-1;
-    while (l<=h)
+    int l=0, r=n-1, found=0;
+    while (l<=r)
     {
-        int m=l+(h-l)/2;
+        int m=l+(r-l)/2;
         if (a[m]==k)
-            return m;
+        {
+            found=1;
+            printf("Element %d found at index %d\n", k, m);
+            //check for multiple occurrences on left side
+            int lm=m-1;
+            while (lm>=0 && a[lm]==k)
+            {
+                printf("Element %d found at index %d\n", k, lm);
+                lm--;
+            }
+            //check for multiple occurrences on right side
+            int rm=m+1;
+            while (rm<n && a[rm]==k)
+            {
+                printf("Element %d found at index %d\n", k, rm);
+                rm++;
+            }
+            break;
+        }
         else if (a[m]<k)
             l=m+1;
         else
-            h=m-1;
+            r=m-1;
     }
-    return -1;
+    if (!found)
+        printf("Element %d not found in the array.\n", k);
 }
 int main(void)
 {
     int n;
     printf("Enter the number of elements: ");
-    scanf("%d", &n);
+    input1:
+    if((scanf("%d", &n))!=1||n<=0)
+    {
+        printf("Invalid input. Please enter a positive integer.\n");
+        while(getchar()!='\n');
+        goto input1;
+    }
     int a[n];
     printf("Enter the elements:\n");
     accept(n, a);
     int c;
     printf("Choose sorting algorithm:\n1. Bubble Sort\n2. Selection Sort\n");
-    scanf("%d", &c);
+    input2:
+    if(scanf("%d", &c)!=1)
+    {
+        printf("Invalid input. Please enter 1 or 2.\n");
+        while(getchar()!='\n');
+        goto input2;
+    }
     if (c==1)
         bubSort(n, a);
     else if (c==2)
@@ -85,11 +122,13 @@ int main(void)
     display(n, a);
     int k;
     printf("Enter the element to search: ");
-    scanf("%d", &k);
-    int r=binSearch(n, a, k);
-    if (r!=-1)
-        printf("Element found at index %d\n", r);
-    else
-        printf("Element not found\n");
+    input3:
+    if(scanf("%d", &k)!=1)
+    {
+        printf("Invalid input. Please enter an integer.\n");
+        while(getchar()!='\n');
+        goto input3;
+    }
+    binSearch(n, a, k);
     return 0;
 }
