@@ -1,4 +1,8 @@
 // Write a program to read a file and count the number of characters, words, and lines in a file.
+/*
+This is a file.
+Hello World
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,7 +13,7 @@ int main()
     input:
     printf("Enter the file path: ");
     fgets(p, sizeof(p), stdin);
-    p[strcspn(p, "\n")]='\0';
+    p[strcspn(p, "\n")]='\0';//replaces newline character with null character
     FILE *f=fopen(p, "r");
     if (f==NULL)
     {
@@ -22,10 +26,10 @@ int main()
     {
         cc++;
         if(ch==' ' || ch=='\n' || ch=='\t')
-            in=0;
+            in=0;//end of a word
         else if(in==0)
         {
-            in=1;
+            in=1;//start of a new word
             wc++;
         }
         if(ch=='\n')
