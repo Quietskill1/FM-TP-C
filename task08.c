@@ -6,7 +6,13 @@ void accept(int *p, int n)
     printf("Enter %d elements:\n", n);
     for(int i=0; i<n; i++)
     {
-        scanf("%d", p+i);
+        input:
+        if(scanf("%d", p+i)!=1)
+        {
+            printf("Invalid input. Please enter an integer.\n");
+            while(getchar()!='\n');
+            goto input;
+        }
     }
 }
 void swapAdjacent(int *p, int n)
@@ -31,7 +37,13 @@ int main(void)
 {
     int n;
     printf("Enter number of elements: ");
-    scanf("%d", &n);
+    input:
+    if(scanf("%d", &n)!=1||n<=0)
+    {
+        printf("Invalid input. Please enter a positive integer.\n");
+        while(getchar()!='\n');
+        goto input;
+    }
     int a[n];
     int *p = a;
     accept(p, n);
