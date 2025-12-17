@@ -1,14 +1,14 @@
 //Write a program to determine if the sum of three user-input integers is even or odd as well as if the number is prime or composite.
 //#include <stdio.h>, main returns an int and has to accept void, scanf("%d",&a) accepts, printf("blabla %d bla bla",a) prints a where %d is
 #include <stdio.h>
+#include <math.h>
 int checkPrime(int num)
 {
     int c=0;
-    if(num==0||num==1)
-        return -1;
     if(num<=1)
-    return false;
-    for(int i=1;i<=num/2;i++)
+        return -1;//1 and below cannot be prime
+    float sq=sqrt(num);//optimize by checking up to sqrt(num), create a data member to avoid recalculating every iteration
+    for(int i=1;i<=sq;i++)
     {
         if(num%i==0)
             c++;
