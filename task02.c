@@ -1,6 +1,6 @@
 //Create a program that converts seconds into hours, minutes, and remaining seconds.
 #include <stdio.h>
-int main(void)
+int main()
 {
     int s;
     input:
