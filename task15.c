@@ -1,16 +1,14 @@
 //Create a recursive function to find the nth term of the Fibonacci series.
-// Fibonacci series:...-8, 5, -3, 2, -1, 1, 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...(sum of prev two terms)
+// Fibonacci series:... 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...(sum of prev two terms)
 #include <stdio.h>
-int fibonacci(int n)//works with negative numbers as well
+int fibonacci(int n)
 {
     if(n==0)
         return 0;
-    else if(n==1 || n==-1)
+    else if(n==1)
         return 1;
-    else if(n>1)
-        return fibonacci(n-1)+fibonacci(n-2);
     else
-        return fibonacci(n+2)-fibonacci(n+1);
+        return fibonacci(n-1) + fibonacci(n-2);
 }
 int main(void) 
 {
@@ -23,7 +21,7 @@ int main(void)
         while(getchar()!='\n');
         goto input;
     }
-    int result = fibonacci(n);
+    int result = fibonacci(n-1);//n-1 because series starts from 0, so nth term is at index n-1
     printf("The %dth term in the Fibonacci series is: %d\n", n, result);
     return 0;
 }
