@@ -84,7 +84,7 @@ Basic operation on file.
 
 15: Create a recursive function to find the nth term of the Fibonacci series.
 Input checking present.
-It works on negatives as well, such that ...f(-1)=1, f(0)=0, f(1)=1...
+Takes n and enters n-1 into the function, as the 1st term is actually f(0), 2nd term is f(1), etc..
 
 16: Implement a recursive function to compress a string by replacing consecutive duplicate characters with their count (e.g., aaabbc becomes a3b2c1).
 Essentially works on the same logic as the 5th program, deleting all duplicates, except its also counting up how many duplicates exist and adding that each time its done with a set of duplicates.
